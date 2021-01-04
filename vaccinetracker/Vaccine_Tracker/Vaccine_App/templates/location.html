@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block body_block %}
+<br>
+
+
+</script>
+<script>
+  // Initialize and add the map
+  function initMap() {
+    // The location of Uluru
+    const uluru = { lat: 39.296177, lng: -76.591759 };
+    const test = { lat: 39.292100, lng: -76.613510 };
+    const test1 = { lat: 39.213860, lng: -76.885750 };
+    const test2 = { lat: 39.277790, lng: -76.835600};
+    // The map, centered at Uluru
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 4,
+      center: uluru, test, test1, test2
+    });
+    // The marker, positioned at Uluru
+    const marker = new google.maps.Marker({
+      position: uluru,
+      map: map,
+    });
+    const marker1 = new google.maps.Marker({
+      position: test,
+      map: map,
+    });
+    const marker2 = new google.maps.Marker({
+      position: test1,
+      map: map,
+    });
+    const marker3 = new google.maps.Marker({
+      position: test2,
+      map: map,
+    });
+  }
+</script>
+<form enctype="multipart/form-data" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+
+  <input type="submit" value="Submit" onclick="toggler('listDiv')">
+</form>
+<br>
+<br>
+<br>
+
+<div id="map"></div>
+
+{% if inputted %}
+{% if success %}
+
+  <div id="listDiv" class="list-group mt-4" >
+  {% for center in vaccine_centers %}
+  
+  <a href="#" class="list-group-item list-group-item-action">{{ center.name }} </a>
+  
+  {% endfor %}
+</div>
+
+
+{% else %}
+<h1>Please enter a proper address</h1>
+{% endif %}
+{% else %}
+<!--<h1>Please enter your address</h1>-->
+{% endif %}
+{% endblock %}
